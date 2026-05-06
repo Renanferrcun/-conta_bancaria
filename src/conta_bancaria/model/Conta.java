@@ -1,8 +1,8 @@
 package conta_bancaria.model;
 
-public class Conta {
-
-	private int numero;
+public abstract class Conta {
+    
+    private int numero;
 	private int agencia;
 	private int tipo;
 	private String titular;
@@ -57,33 +57,32 @@ public class Conta {
 	}
 
 	public boolean sacar(float valor) {
-
-		if (this.saldo < valor) {
-			System.out.println("\n Saldo Insuficiente!");
+		
+		if(this.getSaldo() < valor) {
+			System.out.println("Saldo Insuficiente!");
 			return false;
 		}
-
-		this.saldo = this.saldo - valor;
+		
+		this.setSaldo(this.getSaldo() - valor);
 		return true;
+		
 	}
-
+	
 	public void depositar(float valor) {
-
-		this.saldo = this.saldo + valor;
-
+		this.setSaldo(this.getSaldo() + valor);
 	}
-
+	
 	public void visualizar() {
 
 		String tipo = "";
-
-		switch (this.tipo) {
+		
+		switch(this.tipo) {
 		case 1:
 			tipo = "Conta Corrente";
-			break;
+		break;
 		case 2:
 			tipo = "Conta Poupança";
-			break;
+		break;
 		}
 
 		System.out.println("\n\n***********************************************************");
