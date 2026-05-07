@@ -98,20 +98,27 @@ public class Menu {
 			case 6:
 				System.out.println(Cores.TEXT_WHITE + "Saque\n\n");
 
+				sacar();
+
 				keyPress();
 				break;
 			case 7:
 				System.out.println(Cores.TEXT_WHITE + "Depósito\n\n");
+
+				depositar();
 
 				keyPress();
 				break;
 			case 8:
 				System.out.println(Cores.TEXT_WHITE + "Transferência entre Contas\n\n");
 
+				transferir();
+
 				keyPress();
 				break;
 			default:
 				System.out.println(Cores.TEXT_RED_BOLD + "\nOpção Inválida!\n" + Cores.TEXT_RESET);
+				
 				keyPress();
 				break;
 			}
@@ -144,6 +151,7 @@ public class Menu {
 
 		System.out.println("Digite o Saldo inicial da conta: ");
 		float saldo = leia.nextFloat();
+		leia.nextLine();
 
 		switch (tipo) {
 		case 1 -> {
@@ -203,6 +211,7 @@ public class Menu {
 			System.out.printf("Saldo atual: R$ %.2f\nNovo Saldo (pressione ENTER para manter): ", saldo);
 			entrada = leia.nextLine();
 			saldo = entrada.isEmpty() ? saldo : Float.parseFloat(entrada.replace(',', '.'));
+			leia.nextLine();
 
 			switch (tipo) {
 			case 1 -> {
@@ -245,6 +254,40 @@ public class Menu {
 		} else {
 			System.out.println("\nOperação cancelada.");
 		}
+	}
+	
+	// Adicionado leia.skip("\\R"); nos métodos sacar, depositar e transferir
+	private static void sacar() {
+		System.out.print("Digite o número da conta: ");
+		int numero = leia.nextInt();
+		System.out.print("Digite o valor do saque: ");
+		float valor = leia.nextFloat();
+		leia.skip("\\R");
+		contaController.sacar(numero, valor);
+	}
+
+	private static void depositar() {
+		System.out.print("Digite o número da conta: ");
+		int numero = leia.nextInt();
+		System.out.print("Digite o valor do depósito: ");
+		float valor = leia.nextFloat();
+		leia.skip("\\R");
+		contaController.depositar(numero, valor);
+	}
+
+	private static void transferir() {
+
+		System.out.print("Digite o número da conta de origem: ");
+		int numeroOrigem = leia.nextInt();
+
+		System.out.print("Digite o número da conta de destino: ");
+		int numeroDestino = leia.nextInt();
+
+		System.out.print("Digite o valor da transferência: ");
+		float valor = leia.nextFloat();
+		leia.skip("\\R");
+
+		contaController.transferir(numeroOrigem, numeroDestino, valor);
 	}
 
 	public static void keyPress() {
